@@ -37,8 +37,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk: [8]
-    timeout-minutes: 80
+        jdk: [8, 11]
+    timeout-minutes: 40
     env:
       MVN_COMMON_OPTIONS: -U -B --no-transfer-progress -Dflink.version=${{ inputs.flink_version }}
       MVN_CONNECTION_OPTIONS: -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120
@@ -58,10 +58,10 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Set Maven 3.6.3
+      - name: Set Maven 3.8.6
         uses: stCarolas/setup-maven@v4.2
         with:
-          maven-version: 3.6.3
+          maven-version: 3.8.6
 
       - name: Create cache dirs
         run: mkdir -p ${{ env.FLINK_CACHE_DIR }}
@@ -80,13 +80,14 @@ jobs:
         run: wget -q -c ${{ inputs.flink_url }} -O - | tar -xz
 
       - name: Compile and test flink-connector-hive
-        timeout-minutes: 50
+        timeout-minutes: 30
         run: |
           set -o pipefail
 
-          mvn clean install ${MVN_COMMON_OPTIONS} \
+          mvn clean deploy ${MVN_COMMON_OPTIONS} \
             -DaltDeploymentRepository=validation_repository::default::file:${{ env.MVN_VALIDATION_DIR }} \
-            -Dscala-2.12 -DdistDir=${{ env.FLINK_CACHE_DIR }}/flink-${{ inputs.flink_version }} \
+            -Dscala-2.12 \
+            -Prun-end-to-end-tests -DdistDir=${{ env.FLINK_CACHE_DIR }}/flink-${{ inputs.flink_version }} \
             -Dflink.convergence.phase=install -Pcheck-convergence \
             ${{ env.MVN_CONNECTION_OPTIONS }} \
             -Dlog4j.configurationFile=file://$(pwd)/tools/ci/log4j.properties \
