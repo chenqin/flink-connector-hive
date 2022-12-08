@@ -56,10 +56,6 @@ under the License.
 					<artifactId>pentaho-aggdesigner-algorithm</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>org.datanucleus</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-				<exclusion>
 					<groupId>org.apache.hive</groupId>
 					<artifactId>hive-vector-code-gen</artifactId>
 				</exclusion>
