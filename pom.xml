@@ -79,6 +79,13 @@ under the License.
     <!-- Overwrite hadoop dependency management from flink-parent to use locally defined Hadoop version -->
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.pentaho</groupId>
+                <artifactId>pentaho-aggdesigner-algorithm</artifactId>
+                <version>5.1.5-jhyde</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.apache.flink</groupId>
                 <artifactId>flink-shaded-force-shading</artifactId>
