@@ -368,6 +368,10 @@ under the License.
                     <groupId>org.apache.derby</groupId>
                     <artifactId>derby</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.datanucleus</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -377,6 +381,14 @@ under the License.
             <version>${hive.version}</version>
             <scope>provided</scope>
             <exclusions>
+                <exclusion>
+                    <groupId>org.pentaho</groupId>
+                    <artifactId>pentaho-aggdesigner-algorithm</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.datanucleus</groupId>
+                    <artifactId>datanucleus-core</artifactId>
+                </exclusion>
                 <exclusion>
                     <groupId>org.apache.hive</groupId>
                     <artifactId>hive-vector-code-gen</artifactId>
