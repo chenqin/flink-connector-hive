@@ -38,7 +38,7 @@ jobs:
     strategy:
       matrix:
         jdk: [8, 11]
-    timeout-minutes: 40
+    timeout-minutes: 90
     env:
       MVN_COMMON_OPTIONS: -U -B --no-transfer-progress -Dflink.version=${{ inputs.flink_version }}
       MVN_CONNECTION_OPTIONS: -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.httpconnectionManager.ttlSeconds=120
@@ -79,8 +79,8 @@ jobs:
         if: steps.cache-flink.outputs.cache-hit != 'true'
         run: wget -q -c ${{ inputs.flink_url }} -O - | tar -xz
 
-      - name: Compile and test flink-connector-hive
-        timeout-minutes: 30
+      - name: Compile and test flink-connector-hive2
+        timeout-minutes: 40
         run: |
           set -o pipefail
 
@@ -89,6 +89,20 @@ jobs:
             -Dscala-2.12 \
             -DdistDir=${{ env.FLINK_CACHE_DIR }}/flink-${{ inputs.flink_version }} \
             -Dflink.convergence.phase=install -Pcheck-convergence \
+            ${{ env.MVN_CONNECTION_OPTIONS }} \
+            -Dlog4j.configurationFile=file://$(pwd)/tools/ci/log4j.properties \
+            | tee ${{ env.MVN_BUILD_OUTPUT_FILE }}
+
+      - name: Compile and test flink-connector-hive3
+        timeout-minutes: 40
+        run: |
+          set -o pipefail
+
+          mvn clean deploy ${MVN_COMMON_OPTIONS} \
+            -DaltDeploymentRepository=validation_repository::default::file:${{ env.MVN_VALIDATION_DIR }} \
+            -Dscala-2.12 \
+            -DdistDir=${{ env.FLINK_CACHE_DIR }}/flink-${{ inputs.flink_version }} \
+            -Dflink.convergence.phase=install -Phive3,check-convergence \
             ${{ env.MVN_CONNECTION_OPTIONS }} \
             -Dlog4j.configurationFile=file://$(pwd)/tools/ci/log4j.properties \
             | tee ${{ env.MVN_BUILD_OUTPUT_FILE }}
