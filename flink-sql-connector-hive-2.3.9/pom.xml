@@ -36,6 +36,7 @@ under the License.
 
 	<properties>
 		<hive.version>2.3.9</hive.version>
+		<hivemetastore.hadoop.version>2.7.5</hivemetastore.hadoop.version>
 		<japicmp.skip>true</japicmp.skip>
 	</properties>
 
