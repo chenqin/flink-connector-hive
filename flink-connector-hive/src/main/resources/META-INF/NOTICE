@@ -6,9 +6,16 @@ The Apache Software Foundation (http://www.apache.org/).
 
 This project bundles the following dependencies under the Apache Software License 2.0. (http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-- org.apache.parquet:parquet-hadoop:1.12.3
-- org.apache.parquet:parquet-column:1.12.3
-- org.apache.parquet:parquet-common:1.12.3
-- org.apache.parquet:parquet-encoding:1.12.3
-- org.apache.parquet:parquet-format-structures:1.12.3
-- org.apache.parquet:parquet-jackson:1.12.3
+- org.apache.flink:flink-shaded-force-shading:jar:16.1
+- org.apache.flink:flink-hadoop-compatibility_2.12:jar:1.16.0
+- org.apache.flink:flink-hadoop-bulk:jar:1.16.0
+- org.apache.flink:flink-orc:jar:1.16.0
+- org.apache.flink:flink-orc-nohive:jar:1.16.0
+- org.apache.flink:flink-parquet:jar:1.16.0
+- org.apache.parquet:parquet-hadoop:jar:1.12.2
+- org.apache.parquet:parquet-column:jar:1.12.3
+- org.apache.parquet:parquet-common:jar:1.12.3
+- org.apache.parquet:parquet-encoding:jar:1.12.3
+- org.apache.parquet:parquet-format-structures:jar:1.12.3
+- org.apache.parquet:parquet-jackson:jar:1.12.3
+- org.apache.flink:flink-hadoop-fs:jar:1.16.0
